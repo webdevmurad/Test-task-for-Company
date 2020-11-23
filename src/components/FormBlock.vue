@@ -7,27 +7,48 @@
                 <img src="../assets/user.png" alt="user">
             </div>
             <div class="form-input__group">
-                <div class="form-input__block" :class="{ 'form-group--error': $v.surname.$error }">
+                <div class="form-input__block" :class="{ 'form-group__error': $v.surname.$error }">
                     <label>Фамилия*</label>
                     <input 
                         id="surname"
                         class="form-input__person" 
-                        type="text"  
+                        type="text" 
+                        name="surname" 
                         placeholder="Фамилия*"
                         v-model.trim="$v.surname.$model" 
                         :class="{invalid: ($v.surname.$dirty && !$v.surname.required)}" 
                     >
+                    <small
+                        class="form-helper__text invalid"
+                        v-if="$v.surname.$dirty && !$v.surname.required"
+                    >Поле Фамилия не должно быть пустым</small>
+                    <small
+                        class="form-helper__text invalid"
+                        v-if="$v.surname.$dirty && !$v.surname.minLength"
+                    >
+                        Введите две или более буквы
+                    </small>
                 </div>
-                <div class="form-input__block">
+                <div class="form-input__block" :class="{ 'form-group__error': $v.name.$error }">
                     <label for="name">Имя*</label>
                     <input 
-                        v-model.trim="name" 
+                        v-model.trim="$v.name.$model" 
                         :class="{invalid: ($v.name.$dirty && $v.name.required)}" 
                         class="form-input__person" 
                         type="text" 
                         name="name" 
                         placeholder="Имя*"
                     >
+                    <small
+                        class="form-helper__text invalid"
+                        v-if="$v.name.$dirty && !$v.name.required"
+                    >Поле Фамилия не должно быть пустым</small>
+                    <small
+                        class="form-helper__text invalid"
+                        v-if="$v.name.$dirty && !$v.name.minLength"
+                    >
+                        Введите две или более буквы
+                    </small>
                 </div>
                 <div class="form-input__block">
                     <label for="middleName">Отчество</label>
@@ -35,13 +56,51 @@
                 </div>
             </div>
             <div class="form-input__group">
-                <div class="form-input__block">
+                <div class="form-input__block" :class="{ 'form-group__error': $v.birthday.$error }">
                     <label>Дата рождения*</label>
-                    <input class="form-input__person"  type="date" placeholder="Дата рождения*">
+                    <input 
+                        v-model.trim="$v.birthday.$model" 
+                        :class="{invalid: ($v.birthday.$dirty && $v.birthday.required)}" 
+                        class="form-input__person"  
+                        type="date" 
+                        placeholder="Дата рождения*"
+                    >
+                    <small
+                        class="form-helper__text invalid"
+                        v-if="$v.name.$dirty && !$v.name.required"
+                    >
+                        Укажите дату рождения
+                    </small>
                 </div>
-                <div class="form-input__block">
+                <div class="form-input__block" :class="{ 'form-group__error': $v.phone.$error }">
                     <label>Номер телефона*</label>
-                    <input class="form-input__person" type="text" name="name" placeholder="Номер телефона*">
+                    <input 
+                        class="form-input__person" 
+                        type="text" 
+                        name="phone" 
+                        id="phone"
+                        placeholder="Номер телефона*"
+                        v-model.trim="$v.phone.$model" 
+                        :class="{invalid: ($v.phone.$dirty && $v.phone.required)}" 
+                    >
+                    <small
+                        class="form-helper__text invalid"
+                        v-if="$v.phone.$dirty && !$v.phone.required"
+                    >
+                        Укажите номер телефона
+                    </small>
+                    <small
+                        class="form-helper__text invalid"
+                        v-if="$v.phone.$dirty && !$v.phone.numeric"
+                    >
+                        Укажите цифры
+                    </small>
+                    <small
+                        class="form-helper__text invalid"
+                        v-if="$v.phone.$dirty && !$v.phone.minLength"
+                    >
+                        Укажите минимум 11 цифр
+                    </small>
                 </div>
             </div>
             <div class="form-input__group">
@@ -62,13 +121,25 @@
                 </div>
             </div>
             <div class="form-input__group">
-                <div class="form-input__block">
+                <div class="form-input__block" :class="{ 'form-group__error': $v.clients.$error }">
                     <label for="doctor">Группа клиентов*</label>
-                    <select multiple class="form-multiselect" name="client">
+                    <select 
+                        multiple 
+                        class="form-multiselect" 
+                        name="client"
+                        v-model.trim="$v.clients.$model" 
+                        :class="{invalid: ($v.clients.$dirty && $v.clients.required)}" 
+                    >
                         <option value="vip">VIP</option>
                         <option value="problem">Проблемные</option>
                         <option value="oms">ОМС</option>
                     </select>
+                    <small
+                        class="form-helper__text invalid"
+                        v-if="$v.clients.$dirty && !$v.clients.required"
+                    >
+                        Выберите одно или несколько
+                    </small>
                 </div>
                 <div class="form-input__block-checkbox">
                     <label for="sms">Не отправлять СМС</label>
@@ -82,15 +153,28 @@
                 <div class="form-input__group">
                     <div class="form-input__block">
                         <label>Страна</label>
-                        <input class="form-input__person form-input__address" type="text" name="name" placeholder="Страна">
+                        <input class="form-input__person form-input__address" type="text" name="country" placeholder="Страна">
                     </div>
                     <div class="form-input__block">
                         <label>Область</label>
                         <input class="form-input__person form-input__address" type="text" name="name" placeholder="Область">
                     </div>
-                    <div class="form-input__block">
+                    <div class="form-input__block" :class="{ 'form-group__error': $v.city.$error }">
                         <label>Город*</label>
-                        <input class="form-input__person form-input__address" type="text" name="name" placeholder="Город*">
+                        <input 
+                            class="form-input__person form-input__address" 
+                            type="text" 
+                            name="city" 
+                            placeholder="Город*"
+                            v-model.trim="$v.city.$model" 
+                            :class="{invalid: ($v.city.$dirty && $v.city.required)}" 
+                        >
+                        <small
+                            class="form-helper__text invalid"
+                            v-if="$v.city.$dirty && !$v.city.required"
+                        >
+                            Укажите город
+                        </small>
                     </div>
                 </div>
                 <div class="form-input__group">
@@ -111,13 +195,24 @@
             <div class="form-info__document">
                 <h3 class="form-block__info-title">Паспорт:</h3>
                 <div class="form-input__group">
-                    <div class="form-input__block">
+                    <div class="form-input__block" :class="{ 'form-group__error': $v.typeDocument.$error }">
                         <label for="doctor">Тип документа*</label>
-                        <select class="form-input__person" name="doctor">
+                        <select 
+                            class="form-input__person" 
+                            name="doctor"
+                            v-model.trim="$v.typeDocument.$model" 
+                            :class="{invalid: ($v.typeDocument.$dirty && $v.typeDocument.required)}" 
+                        >
                             <option value="vip">Паспорт</option>
                             <option value="problem">Свидетельство о рождении</option>
                             <option value="oms">Вод. удостоверение</option>
                         </select>
+                        <small
+                            class="form-helper__text invalid"
+                            v-if="$v.typeDocument.$dirty && !$v.typeDocument.required"
+                        >
+                            Выберите тип документа
+                        </small>
                     </div>
                     <div class="form-input__block">
                         <label>Серия</label>
@@ -131,11 +226,29 @@
                 <div class="form-input__group">
                     <div class="form-input__block">
                         <label>Кем выдан</label>
-                        <input class="form-input__person form-input__issued" type="text" name="name" placeholder="Кем выдан">
+                        <input 
+                            class="form-input__person form-input__issued" 
+                            type="text" 
+                            name="issuedBy" 
+                            placeholder="Кем выдан"
+                        >
                     </div>
-                    <div class="form-input__block">
+                    <div class="form-input__block" :class="{ 'form-group__error': $v.dateIssue.$error }">
                         <label>Дата выдачи*</label>
-                        <input class="form-input__person" type="text" name="name" placeholder="Дата выдачи*">
+                        <input 
+                            class="form-input__person" 
+                            type="text" 
+                            name="dateIssue" 
+                            placeholder="Дата выдачи*"
+                            v-model.trim="$v.dateIssue.$model" 
+                            :class="{invalid: ($v.dateIssue.$dirty && $v.dateIssue.required)}" 
+                        >
+                        <small
+                            class="form-helper__text invalid"
+                            v-if="$v.dateIssue.$dirty && !$v.dateIssue.required"
+                        >
+                            Укажите дату выдачи
+                        </small>
                     </div>
                 </div>
             </div>
@@ -149,8 +262,7 @@
 
 
 <script>
-
-import { required, minLength } from 'vuelidate/lib/validators'
+import { required, minLength, numeric } from 'vuelidate/lib/validators'
 
 
 export default {
@@ -162,7 +274,7 @@ export default {
         birthday: '',
         phone: '',
         gender: '',
-        clients: '',
+        clients: [],
         doctor: '',
         smsMail: false,
         index: '',
@@ -180,17 +292,46 @@ export default {
     }),
     validations: {
         surname: {required, minLength: minLength(2)},
-        name: {required, minLength: minLength(2)}
+        name: {required, minLength: minLength(2)},
+        middleName: {},
+        birthday: {required},
+        phone: {required, numeric, minLength: minLength(11)},
+        clients: {required},
+        city: {required},
+        typeDocument: {required},
+        dateIssue: {required},
     },
     methods: {
-        submitHandler(){
+        submitHandler(e){
             if (this.$v.$invalid) {
                 this.$v.$touch()
-                console.log(this.validations)
                 return 
             }
+            console.log(e)
+            const formData = {
+                surname: this.surname,
+                name: this.name,
+                middleName: this.middleName,
+                birthday: this.birthday,
+                phone: this.phone,
+                gender: this.gender,
+                clients: this.clients,
+                doctor: this.doctor,
+                smsMail: this.smsMail,
+                index: this.index,
+                country: this.country,
+                region: this.region,
+                city: this.city,
+                street: this.street,
+                house: this.house,
+                typeDocument: this.typeDocument,
+                series: this.series,
+                numberDocument: this.numberDocument,
+                issuedBy: this.issuedBy,
+                dateIssue: this.dateIssue,
+            }
         }
-    }
+    },
 }
 </script>
 
@@ -287,6 +428,18 @@ export default {
             margin-top: 50px
             display: flex
             justify-content: flex-end
+
+    &-helper
+        &__text
+            font-size: 10px
+            color: red
+
+    &-group
+        &__error
+            input
+                border: 1px solid red
+            select
+                border: 1px solid red
 
 
 </style>
