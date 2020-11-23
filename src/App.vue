@@ -1,28 +1,42 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <LeftBlock/>
+    <FormBlock/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import FormBlock from './components/FormBlock.vue'
+import LeftBlock from './components/LeftBlock.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    FormBlock,
+    LeftBlock
   }
 }
 </script>
 
 <style>
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Open Sans';
+}
+html, body {
+  width: 100%;
+  height: 100%;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 </style>
