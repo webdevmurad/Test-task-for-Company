@@ -52,7 +52,13 @@
                 </div>
                 <div class="form-input__block">
                     <label for="middleName">Отчество</label>
-                    <input class="form-input__person" type="text" name="middleName" placeholder="Отчество">
+                    <input 
+                        class="form-input__person" 
+                        type="text" 
+                        name="middleName" 
+                        v-model.trim="$v.middleName.$model" 
+                        placeholder="Отчество"
+                    >
                 </div>
             </div>
             <div class="form-input__group">
@@ -105,22 +111,30 @@
             </div>
             <div class="form-input__group">
                 <div class="form-input__block">
-                    <label for="gender">Пол</label>
-                    <select class="form-input__person" name="gender">
+                    <label>Пол</label>
+                    <select 
+                        class="form-input__person" 
+                        name="gender"
+                        v-model.trim="$v.gender.$model" 
+                    >
                         <option value="male">Мужской</option>
                         <option value="male">Женский</option>
                     </select>
                 </div>
                 <div class="form-input__block">
-                    <label for="doctor">Лечащий врач</label>
-                    <select class="form-input__person" name="doctor">
+                    <label>Лечащий врач</label>
+                    <select 
+                        class="form-input__person" 
+                        name="doctor"
+                        v-model.trim="$v.doctor.$model" 
+                    >
                         <option value="ivanov">Иванов</option>
                         <option value="zakharov">Захаров</option>
                         <option value="chernysheva">Чернышева</option>
                     </select>
                 </div>
             </div>
-            <div class="form-input__group">
+            <div class="form-input__group form-group__inputs-last">
                 <div class="form-input__block" :class="{ 'form-group__error': $v.clients.$error }">
                     <label for="doctor">Группа клиентов*</label>
                     <select 
@@ -143,21 +157,38 @@
                 </div>
                 <div class="form-input__block-checkbox">
                     <label for="sms">Не отправлять СМС</label>
-                    <input type="checkbox" name="sms" id="sms">
+                    <input 
+                        type="checkbox" 
+                        name="sms" 
+                        id="sms"
+                        v-model.trim="$v.smsMail.$model" 
+                    >
                 </div>
             </div>
         </div>
         <div class="form-block__info form-block__info-right">
-            <div class="form-block__address">
-                <h3 class="form-block__info-title">Адрес:</h3>
+            <h3 class="form-block__info-title">Адрес:</h3>
+            <div class="form-block__address"> 
                 <div class="form-input__group">
                     <div class="form-input__block">
                         <label>Страна</label>
-                        <input class="form-input__person form-input__address" type="text" name="country" placeholder="Страна">
+                        <input 
+                            class="form-input__person form-input__address" 
+                            type="text" 
+                            name="country" 
+                            placeholder="Страна"
+                            v-model.trim="$v.country.$model" 
+                        >
                     </div>
                     <div class="form-input__block">
                         <label>Область</label>
-                        <input class="form-input__person form-input__address" type="text" name="name" placeholder="Область">
+                        <input 
+                            class="form-input__person form-input__address" 
+                            type="text" 
+                            name="region" 
+                            placeholder="Область"
+                            v-model.trim="$v.region.$model" 
+                        >
                     </div>
                     <div class="form-input__block" :class="{ 'form-group__error': $v.city.$error }">
                         <label>Город*</label>
@@ -177,18 +208,36 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-input__group">
+                <div class="form-input__group form-input__address-right">
                     <div class="form-input__block">
                         <label>Индекс</label>
-                        <input class="form-input__person" type="text" name="name" placeholder="Индекс">
+                        <input 
+                            class="form-input__person" 
+                            type="text" 
+                            name="index" 
+                            placeholder="Индекс"
+                            v-model.trim="$v.index.$model" 
+                        >
                     </div>
                     <div class="form-input__block">
                         <label>Улица</label>
-                        <input class="form-input__person" type="text" name="name" placeholder="Улица">
+                        <input 
+                            class="form-input__person" 
+                            type="text" 
+                            name="street" 
+                            placeholder="Улица"
+                            v-model.trim="$v.street.$model" 
+                        >
                     </div>
                     <div class="form-input__block">
                         <label>Дом</label>
-                        <input class="form-input__person" type="text" name="name" placeholder="Дом">
+                        <input 
+                            class="form-input__person" 
+                            type="text" 
+                            name="house" 
+                            placeholder="Дом"
+                            v-model.trim="$v.house.$model" 
+                        >
                     </div>
                 </div>
             </div>
@@ -196,16 +245,16 @@
                 <h3 class="form-block__info-title">Паспорт:</h3>
                 <div class="form-input__group">
                     <div class="form-input__block" :class="{ 'form-group__error': $v.typeDocument.$error }">
-                        <label for="doctor">Тип документа*</label>
+                        <label>Тип документа*</label>
                         <select 
                             class="form-input__person" 
-                            name="doctor"
+                            name="typeDocument"
                             v-model.trim="$v.typeDocument.$model" 
                             :class="{invalid: ($v.typeDocument.$dirty && $v.typeDocument.required)}" 
                         >
-                            <option value="vip">Паспорт</option>
-                            <option value="problem">Свидетельство о рождении</option>
-                            <option value="oms">Вод. удостоверение</option>
+                            <option value="pasport">Паспорт</option>
+                            <option value="birth-certificate">Свидетельство о рождении</option>
+                            <option value="driver's-license">Вод. удостоверение</option>
                         </select>
                         <small
                             class="form-helper__text invalid"
@@ -216,11 +265,22 @@
                     </div>
                     <div class="form-input__block">
                         <label>Серия</label>
-                        <input class="form-input__person" type="text" name="name" placeholder="Серия">
+                        <input 
+                            class="form-input__person" 
+                            type="text" 
+                            name="name" 
+                            placeholder="Серия"
+                            v-model.trim="$v.series.$model" 
+                        >
                     </div>
                     <div class="form-input__block">
                         <label>Номер</label>
-                        <input class="form-input__person" type="text" name="name" placeholder="Номер">
+                        <input 
+                            class="form-input__person" 
+                            type="text" name="name" 
+                            placeholder="Номер"
+                            v-model.trim="$v.numberDocument.$model" 
+                        >
                     </div>
                 </div>
                 <div class="form-input__group">
@@ -231,6 +291,7 @@
                             type="text" 
                             name="issuedBy" 
                             placeholder="Кем выдан"
+                            v-model.trim="$v.issuedBy.$model" 
                         >
                     </div>
                     <div class="form-input__block" :class="{ 'form-group__error': $v.dateIssue.$error }">
@@ -257,6 +318,14 @@
             </div>
         </div>
     </form>
+    <div :class="{'form-popup__positive' : showModalTrue}" class="form-positive" :click="disableM">
+        <p class="form-positive__text">Форма успешно заполнена</p>
+        <p class="form-positive__text">Данные отправлены.</p>
+    </div>
+    <div class="form-error" :class="{'form-popup__error': showModalFalse , 'form-popup__disabled' : !showModalFalse}" >
+        <p class="form-error__text">Форма заполнена неправильно</p>
+        <p class="form-error__text">Данные не отправлены.</p>
+    </div>
   </div>
 </template>
 
@@ -270,25 +339,14 @@ export default {
     data: () => ({
         surname: '',
         name: '',
-        middleName: '',
         birthday: '',
         phone: '',
-        gender: '',
         clients: [],
-        doctor: '',
-        smsMail: false,
-        index: '',
-        country: '',
-        region: '',
         city: '',
-        street: '',
-        house: '',
         typeDocument: '',
-        series: '',
-        numberDocument: '',
-        issuedBy: '',
         dateIssue: '',
-
+        showModalFalse: false,
+        showModalTrue: false
     }),
     validations: {
         surname: {required, minLength: minLength(2)},
@@ -296,42 +354,68 @@ export default {
         middleName: {},
         birthday: {required},
         phone: {required, numeric, minLength: minLength(11)},
+        gender: {},
         clients: {required},
+        doctor:{},
+        smsMail: {},
+        index: {},
+        country: {},
+        region: {},
+        street: {},
+        house: {},
         city: {required},
         typeDocument: {required},
+        series: {},
+        numberDocument: {},
+        issuedBy: {},
         dateIssue: {required},
     },
     methods: {
         submitHandler(e){
             if (this.$v.$invalid) {
                 this.$v.$touch()
-                return 
+                this.showModalFalse = true
+                if(this.showModalFalse) {
+                    setTimeout(function(){
+                        this.showModalFalse = false
+                        console.log(this.showModalFalse)
+                    }, 2000);
+                }
+            } else if (!this.$v.$invalid) {
+                const formData = {
+                    surname: this.surname ? this.surname : '',
+                    name: this.name ? this.name : '',
+                    middleName: this.middleName ? this.middleName : '',
+                    birthday: this.birthday ? this.birthday : '',
+                    phone: this.phone ? this.phone : '',
+                    gender: this.gender ? this.gender : '',
+                    clients: this.clients ? this.clients : '',
+                    doctor: this.doctor ? this.doctor : '',
+                    smsMail: this.doctor ? this.doctor : false,
+                    index: this.index ? this.index : '',
+                    country: this.country ? this.country : '',
+                    region: this.region ? this.region : '',
+                    city: this.city ? this.city : '',
+                    street: this.street ? this.street : '',
+                    house: this.house ? this.house : '',
+                    typeDocument: this.typeDocument ? this.typeDocument : '',
+                    series: this.series ? this.series : '',
+                    numberDocument: this.numberDocument ? this.numberDocument : '',
+                    issuedBy: this.issuedBy ? this.issuedBy : '',
+                    dateIssue: this.dateIssue ? this.dateIssue : '',
+                }
+                this.showModalTrue = true
+                this.showModalFalse = false
+                if(this.showModalTrue) {
+                    console.log('работает')
+                }
             }
-            console.log(e)
-            const formData = {
-                surname: this.surname,
-                name: this.name,
-                middleName: this.middleName,
-                birthday: this.birthday,
-                phone: this.phone,
-                gender: this.gender,
-                clients: this.clients,
-                doctor: this.doctor,
-                smsMail: this.smsMail,
-                index: this.index,
-                country: this.country,
-                region: this.region,
-                city: this.city,
-                street: this.street,
-                house: this.house,
-                typeDocument: this.typeDocument,
-                series: this.series,
-                numberDocument: this.numberDocument,
-                issuedBy: this.issuedBy,
-                dateIssue: this.dateIssue,
-            }
+        },
+        disableM: function () {
+            this.showModalFalse = false
+            console.log('работает')
         }
-    },
+    }
 }
 </script>
 
@@ -340,6 +424,30 @@ export default {
     background-color: #EDEEF2
     padding: 50px
     width: 100%
+    position: relative
+    &-positive
+        position: absolute
+        top: 5%
+        right: -500%
+        padding: 10px 20px
+        background-color: rgba(49,153,52, 0.7)
+        transition: 0.3s
+        &__text 
+            color: white
+    &-error
+        position: absolute
+        top: 5%
+        right: -500%
+        padding: 10px 20px
+        background-color: rgba(258,8,0, 0.7)
+        transition: 0.3s
+        &__text 
+            color: white
+    &-popup
+        &__positive 
+            right: 5%
+        &__error
+            right: 5%
     &-title 
         color: grey
     &-block 
@@ -355,6 +463,9 @@ export default {
                 width: 40%
             &-right 
                 width: 60%
+        &__address
+            display: flex
+            justify-content: space-between
     &-date 
         width: 250px
     &-user
@@ -364,11 +475,16 @@ export default {
             margin-bottom: 50px
 
     &-input
+        &__address
+            &-right
+                justify-content: flex-end!important
         &__group 
+            width: 100%
             display: flex
             align-items: center
             flex-wrap: wrap
             justify-content: space-between
+            
         &__person 
             width: 250px
         &__address 
@@ -433,13 +549,102 @@ export default {
         &__text
             font-size: 10px
             color: red
-
-    &-group
         &__error
             input
                 border: 1px solid red
             select
                 border: 1px solid red
+
+@media (max-width: 1600px)
+    .form 
+        &-block 
+            height: 100%
+            &__info
+                &-left
+                    width: 30%
+                &-left .form-input__block
+                    width: 100%
+                &-left .form-input__block input
+                    width: 100%
+                &-left .form-input__block select
+                    width: 100%
+
+                &-right 
+                    width: 70%
+        &-group
+            &__inputs
+                &-last
+                    display: flex
+                    align-items: flex-start
+                    flex-direction: column
+        &-input
+            &__block
+                &-checkbox
+                    margin-top: 10px
+@media (max-width: 1380px)
+    .form 
+        &-input
+            &__address
+                width: 400px
+            &__issued
+                width: 400px
+            &__address 
+                &-right 
+                    justify-content: flex-start!important
+        &-block 
+            &__address 
+                flex-direction: column
+            &__info
+                &-right 
+                    padding-left: 150px
+                &-right input 
+                    width: 400px
+                &-right select 
+                    width: 400px
+@media (max-width: 1380px)
+    .form
+        &-block
+            overflow: auto
+            &__info
+                &-left
+                    width: 50%
+                &-right 
+                    width: 50%
+                    padding-left: 0px
+                &-right .form-input__block
+                    width: 100%
+                &-right input 
+                    width: 100%
+                &-right select 
+                    width: 100%
+                &-title 
+                    margin-top: 10px
+        &-button 
+            &__block 
+                margin-top: 30px
+
+@media (max-width: 768px)
+    .form
+        &-block
+            flex-direction: column
+            &__info
+                padding: 0px
+                &-left
+                    width: auto
+                &-right 
+                    width: auto
+
+@media (max-width: 500px)
+    .form 
+        padding: 20px
+        &-block 
+            height: 90%
+    
+@media (max-width: 380px)
+    .form 
+        padding: 10px
+        &-title 
+            font-size: 20px
 
 
 </style>
