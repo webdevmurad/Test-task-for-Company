@@ -135,26 +135,6 @@
                 </div>
             </div>
             <div class="form-input__group form-group__inputs-last">
-                <div class="form-input__block" :class="{ 'form-group__error': $v.clients.$error }">
-                    <label for="doctor">Группа клиентов*</label>
-                    <select 
-                        multiple 
-                        class="form-multiselect" 
-                        name="client"
-                        v-model.trim="$v.clients.$model" 
-                        :class="{invalid: ($v.clients.$dirty && $v.clients.required)}" 
-                    >
-                        <option value="vip">VIP</option>
-                        <option value="problem">Проблемные</option>
-                        <option value="oms">ОМС</option>
-                    </select>
-                    <small
-                        class="form-helper__text invalid"
-                        v-if="$v.clients.$dirty && !$v.clients.required"
-                    >
-                        Выберите одно или несколько
-                    </small>
-                </div>
                 <div class="form-input__block-checkbox">
                     <label for="sms">Не отправлять СМС</label>
                     <input 
@@ -163,6 +143,29 @@
                         id="sms"
                         v-model.trim="$v.smsMail.$model" 
                     >
+                </div>
+            </div>
+            <div class="form-input__group">
+                <div class="form-input__block form-input__block-multiselect" :class="{ 'form-group__error': $v.clients.$error }">
+                    <label for="doctor">Группа клиентов*</label>
+                    <multiselect 
+                        class="form-input__multiselect"
+                        v-model="clients" 
+                        tag-placeholder="Add this as new tag" 
+                        placeholder="Добавьте одно или несколько" 
+                        label="name" 
+                        track-by="code" 
+                        :options="options" 
+                        :multiple="true" 
+                        :taggable="false" 
+                        @tag="addTag">
+                    </multiselect>
+                    <small
+                        class="form-helper__text invalid"
+                        v-if="$v.clients.$dirty && !$v.clients.required"
+                    >
+                        Выберите одно или несколько
+                    </small>
                 </div>
             </div>
         </div>
@@ -331,11 +334,15 @@
 
 
 <script>
+import Vue from 'vue'
 import { required, minLength, numeric } from 'vuelidate/lib/validators'
+import Multiselect from 'vue-multiselect'
 
+Vue.component('multiselect', Multiselect)
 
 export default {
     name: 'CryptoTable',
+    components: { Multiselect },
     data: () => ({
         surname: '',
         name: '',
@@ -346,7 +353,12 @@ export default {
         typeDocument: '',
         dateIssue: '',
         showModalFalse: false,
-        showModalTrue: false
+        showModalTrue: false,
+        options: [
+            { name: 'VIP', code: 'vip' },
+            { name: 'Проблемные', code: 'problems' },
+            { name: 'ОМС', code: 'omc' }
+        ]
     }),
     validations: {
         surname: {required, minLength: minLength(2)},
@@ -414,10 +426,20 @@ export default {
         disableM: function () {
             this.showModalFalse = false
             console.log('работает')
+        },
+        addTag (newTag) {
+            const tag = {
+                name: newTag,
+                code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+            }
+            this.options.push(tag)
+            this.value.push(tag)
         }
     }
 }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="sass">
 .form 
@@ -484,7 +506,9 @@ export default {
             align-items: center
             flex-wrap: wrap
             justify-content: space-between
-            
+            margin-top: 10px
+        &__multiselect
+            height: 22px!important
         &__person 
             width: 250px
         &__address 
@@ -522,6 +546,8 @@ export default {
                 input
                     width: 15px
                     height: 15px
+            &-multiselect
+                width: 100%
         &__issued 
             width: 450px
     &-block
@@ -554,6 +580,13 @@ export default {
                 border: 1px solid red
             select
                 border: 1px solid red
+
+.multiselect
+    &__tags
+        padding: 4px
+    &__tags input 
+        height: 22px
+
 
 @media (max-width: 1600px)
     .form 
@@ -639,6 +672,9 @@ export default {
         padding: 20px
         &-block 
             height: 90%
+        &-error
+            &__text
+                font-size: 12px
     
 @media (max-width: 380px)
     .form 
