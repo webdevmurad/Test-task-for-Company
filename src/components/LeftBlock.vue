@@ -1,5 +1,5 @@
 <template>
-  <div class="left-block">
+  <div class="head-block">
   </div>
 </template>
 
@@ -14,13 +14,8 @@ export default {
 </script>
 
 <style lang="sass">
-.left-block 
-    width: 50px
-    height: 100%
-    background-color: #46A0E3
-
-@media (max-width: 500px)
-    .left-block 
-        display: none
-
+.head
+    &-block 
+        height: 50px
+        background-color: #0078D4
 </style>
