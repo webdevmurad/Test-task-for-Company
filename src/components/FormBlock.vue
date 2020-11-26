@@ -559,6 +559,14 @@ export default {
     .form 
         &-submit 
             padding: 20px 0
+        &-positive
+            top: 1% 
+            p 
+                font-size: 12px
+        &-error 
+            top: 1%
+            p 
+                font-size: 12px
 
 @media (max-width: 400px)
     .body
