@@ -1,24 +1,15 @@
 # vue-form
 
-## Project setup
-```
-npm install
-```
+Стэк: Vue, Vuetify, SASS(styles)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+##############################################
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Данный проект можно склонировать к себе на компьютер через терминал введя команду : git clone https://github.com/webdevmurad/Test-task-for-Company.git
 
-### Lints and fixes files
-```
-npm run lint
-```
+Потом введите команду: npm i или npm install, разницы нет. (Для установления зависимостей.)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+И последнюю команду которую вы должны ввести : npm run serve , для того чтобы проект запустился.
+
+##############################################
+
+[Demo Spa приложения можно посмотреть здесь ](https://webdevmurad.github.io/Test-task-for-Company/)
