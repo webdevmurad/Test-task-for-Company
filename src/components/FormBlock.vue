@@ -77,25 +77,21 @@
                 <div class="form-person__input-block form-display__block" :class="{ 'form-input__error': $v.phone.$error }">
                     <label>Номер телефона*</label>
                     <input 
-                        type="text" 
+                        type="tel" 
                         name="phone" 
                         id="phone"
+                        autocomplete="tel"
+                        maxlength="14"
+                        v-phone
                         placeholder="Номер телефона*"
-                        mask="\+7\ (111) 111-11-11"
                         v-model.trim="$v.phone.$model" 
                         :class="{invalid: ($v.phone.$dirty && $v.phone.required)}" 
-                    >
+                    />
                     <small
                         class=" invalid"
                         v-if="$v.phone.$dirty && !$v.phone.required"
                     >
                         Укажите номер телефона
-                    </small>
-                    <small
-                        class=" invalid"
-                        v-if="$v.phone.$dirty && !$v.phone.numeric"
-                    >
-                        Укажите цифры
                     </small>
                 </div>
                 <div class="form-person__select-block form-display__block">
@@ -296,22 +292,37 @@
             <button class="form-submit__button" type="submit">Отправить</button>
         </div>
     </form>
-    <!-- <div :class="{'form-popup__positive' : showModalTrue}" class="form-positive" :click="disableM">
+    <div :class="{'form-popup__positive' : showModalTrue}" class="form-positive" :click="disableM">
         <p class="form-positive__text">Форма успешно заполнена</p>
         <p class="form-positive__text">Данные отправлены.</p>
     </div>
     <div class="form-error" :class="{'form-popup__error': showModalFalse , 'form-popup__disabled' : !showModalFalse}" >
         <p class="form-error__text">Форма заполнена неправильно</p>
         <p class="form-error__text">Данные не отправлены.</p>
-    </div> -->
+    </div>
   </div>
 </template>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
 
 <script>
 import Vue from 'vue'
 import { required, minLength, numeric } from 'vuelidate/lib/validators'
 import Multiselect from 'vue-multiselect'
+
+Vue.directive('phone', {
+    bind(el) {  
+        el.oninput = function(e) {
+        if (!e.isTrusted) {
+            return;
+        }
+
+        const x = this.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        this.value = !x[2] ? x[1] :  '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        el.dispatchEvent(new Event('input'));
+        }
+    },
+});
 
 Vue.component('multiselect', Multiselect)
 
@@ -340,7 +351,7 @@ export default {
         name: {required, minLength: minLength(2)},
         middleName: {},
         birthday: {required},
-        phone: {required, numeric, minLength: minLength(11)},
+        phone: {required},
         gender: {},
         clients: {required},
         doctor:{},
@@ -393,9 +404,7 @@ export default {
                 }
                 this.showModalTrue = true
                 this.showModalFalse = false
-                if(this.showModalTrue) {
-                    console.log('работает')
-                }
+                console.log(formData)
             }
         },
         disableM: function () {
@@ -422,6 +431,7 @@ export default {
 .body
     &-block
         margin: auto
+        position: relative
         &__title 
             padding: 10px 0
             color: #0078D4
@@ -502,6 +512,29 @@ export default {
                 border: 1px solid red
             .multiselect__tags
                 border: 1px solid red
+
+    &-positive 
+        position: absolute
+        top: 5%
+        right: -500%
+        padding: 15px 30px
+        color: white 
+        background-color: rgba(87,246,59, 0.6)
+        transition: 0.3s
+    &-error 
+        position: absolute
+        top: 5%
+        right: -500%
+        padding: 15px 30px
+        color: white 
+        background-color: rgba(255,0,0, 0.6)
+        transition: 0.3s
+    &-popup
+        &__positive
+            right: 5%
+        &__error
+            right: 5%
+    
 
 .multiselect
     width: 350px
